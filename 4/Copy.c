@@ -31,7 +31,7 @@ void writeBytes(int fd, int* buf, int num) {
     }
 }
 
-void printFile(char* infile, char* outfile) {
+void copyFile(char* infile, char* outfile) {
     int buf[BUF_SIZE];
     int bytesRead = 0;
 
@@ -52,12 +52,15 @@ void printFile(char* infile, char* outfile) {
         perror("Read Failure");
         exit(1);
     }
+
+    close(i_fd);
+    close(o_fd);
 }
 
 int main(int argc, char** argv) {
 
     checkArgs(argc, argv);
-    printFile(argv[1], argv[2]);
+    copyFile(argv[1], argv[2]);
 
     return 0;
 }
