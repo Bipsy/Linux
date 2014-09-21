@@ -4,6 +4,7 @@
 #include <errno.h>
 #include <string.h>
 #include <unistd.h>
+#include <sys/stat.h>
 
 
 #define BUF_SIZE 1024
@@ -34,8 +35,11 @@ void printFile(char* infile, char* outfile) {
     int buf[BUF_SIZE];
     int bytesRead = 0;
 
+    mode_t permissions = S_IRUSR | S_IWUSR;
+    int flags = O_CREAT | O_TRUNC | O_WRONLY;
+
     int i_fd = open(infile, O_RDONLY);
-    int o_fd = open(outfile, O_WRONLY);
+    int o_fd = open(outfile, flags, permissions);
     if (i_fd == -1 || o_fd == -1) {
         perror("Open Failure");
         exit(1);
